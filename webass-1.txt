@@ -59,7 +59,7 @@ Ajax techniques often involve working with callbacks or Promises to handle async
 In summary, callbacks were the initial approach for handling asynchronous operations, but they could lead to complex and hard-to-maintain code. Promises improved the situation by providing a structured
 way to handle asynchronous operations. Fetch is a modern API specifically designed for making network requests. Ajax encompasses various techniques, with XMLHttpRequest being a common component, used for
 asynchronous interactions on web pages.
-
+=======================================================================================================================================================================
 
 question 3:
 
@@ -131,7 +131,7 @@ Now, let's define the DTD and XSD for the provided XML (books.xml):
     </xs:element>
 </xs:schema>
 
-
+==================================================================================================================================================================================================================
 question 4:
 
 json for the above file is
@@ -158,6 +158,7 @@ json for the above file is
   ]
 }
 
+==================================================================================================================================================================================================================
 
 question 5:
 
@@ -227,6 +228,7 @@ fetch('https://auth-server.com/token', {
   });
 });
 
+==================================================================================================================================================================================================================
 
 question 6:
 
