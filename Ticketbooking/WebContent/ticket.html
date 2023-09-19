@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ticket Reservation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        h1 {
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        select,
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Ticket Reservation</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="from">From Station:</label>
+                <select id="from" class="form-control">
+                    <option>Select</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="to">To Station:</label>
+                <select id="to" class="form-control">
+                    <option>Select</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="train">Train:</label>
+                <select id="train" class="form-control">
+                    <option>Select</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="clas">Class:</label>
+                <select id="clas" class="form-control">
+                    <option value="general">General</option>
+                    <option value="sleeper">Sleeper</option>
+                    <option value="1tier">1 Tier AC</option>
+                    <option value="2tier">2 Tier AC</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="date">Date:</label>
+                <input type="date" id="date" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h3>Passenger Details</h3>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <label for="name">Name:</label>
+                <input type="text" id="name" class="form-control">
+            </div>
+
+            <div class="col-md-3">
+                <label for="gender">Gender:</label>
+                <input type="text" id="gender" class="form-control">
+            </div>
+
+            <div class="col-md-3">
+                <label for="age">Age:</label>
+                <input type="text" id="age" class="form-control">
+            </div>
+
+            <div class="col-md-3">
+                <button id="add" class="btn btn-primary" onclick="addRow(event)">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <table id="table" border="1">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody id="container">
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <button class="btn btn-primary" onclick="bok()">Submit</button>
+    </div>
+
+  
+	<script>
+	
+	 var xhr=new XMLHttpRequest();
+     xhr.open('GET','StServlet?',true);
+     xhr.onreadystatechange=function(){
+     	if(xhr.readyState===4 && xhr.status===200){
+     		var data=JSON.parse(xhr.responseText);
+     		console.log(data);
+     		
+     		meth(data);
+     	}	
+     	
+     }
+     xhr.send();
+   function meth(data){
+			
+			
+     	var from=document.getElementById("from");
+     	data.forEach(function (da){
+     		var option=document.createElement("option");
+     		option.textContent=da.from;
+     		from.appendChild(option);
+     	})
+     	var to=document.getElementById("to");
+     	data.forEach(function (da){
+     		var option=document.createElement("option");
+     		option.textContent=da.to;
+     		to.appendChild(option);
+     	})
+     	var train=document.getElementById("train");
+     	data.forEach(function (da){
+     		
+     		var option=document.createElement("option");
+     		option.textContent=da.train;
+     		train.appendChild(option);
+     	})
+     }
+
+	
+	
+    function bok(){
+    	
+    	var from=document.getElementById('from').value;
+    	var to=document.getElementById('to').value;
+    	var train=document.getElementById('train').value;
+    	var clas=document.getElementById('clas').value;
+    	var date=document.getElementById('date').value;
+    	var tdata = "from=" + from + "&to=" + to + "&train=" + train + "&clas=" + clas + "&date=" + date + pass;
+    	console.log(pass);
+    	var xh=new XMLHttpRequest();
+    	xh.open('GET','Booking?'+tdata,true);
+    	
+    	xh.onreadystatechange=function(){
+    		
+    		if(xh.readyState===4){
+    			const data=xh.responseText;
+    			
+    			document.body.innerHTML=data;
+    			console.log(data);
+    	}
+    	}
+    	xh.send();
+    }
+	
+
+		
+        var pass="";
+        function addRow(event) {
+        	event.preventDefault();
+        	var tbody = document.getElementById('container');
+			var trow = document.createElement('tr');
+			var tdef1 = document.createElement('td');
+			var tdef2 = document.createElement('td');
+			var tdef3 = document.createElement('td');
+			var tdef4 = document.createElement('td');
+			
+			var name = document.getElementById('name').value;
+			var age = document.getElementById('age').value;
+			var gender = document.getElementById('gender').value;
+			
+			tdef1.textContent = name;
+			tdef3.textContent = age;
+			tdef2.textContent = gender;
+			
+			var button = document.createElement("button");
+			button.textContent = "Remove";
+			button.addEventListener('click', function () {
+				const row = this.parentNode.parentNode;
+				row.innerHTML = "";
+			})
+			tdef4.appendChild(button);
+			trow.appendChild(tdef1);
+			trow.appendChild(tdef2);
+			trow.appendChild(tdef3);
+			trow.appendChild(tdef4);
+			
+			tbody.appendChild(trow);
+	
+			pass += "&name=" +name + "&gender=" +gender + "&age=" +age;
+			console.log(pass);
+		
+		}
+        
+        
+        
+    </script>
+
+
+	</div>
+</body>
+
+</html>
