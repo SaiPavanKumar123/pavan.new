@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Employee Management</title>
+<!-- Include any necessary CSS and JavaScript libraries here -->
+</head>
+<body>
+    <button type="button" class="btn btn-primary custom-button" onclick="displayEmployees()">Display Employees</button>
+
+    <table class="table" border="2px">
+        <thead>
+            <tr>
+                <th>Employee Number</th>
+                <th>Department Number</th>
+                <th>Job</th>
+                <th>Salary</th>
+                <th>Employee Name</th>
+              
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Employee data will be inserted here dynamically -->
+        </tbody>
+    </table>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        function displayEmployees() {
+            $.ajax({
+                type: "GET",
+                url: "employees",
+                dataType: 'json',
+                success: function (data) {
+                    var output = '';
+                    for (var i = 0; i < data.length; i++) {
+                        output += '<tr>';
+                        output += '<td>' + data[i].empNo + '</td>';
+                        output += '<td>' + data[i].deptNo + '</td>';
+                        output += '<td>' + data[i].job + '</td>';
+                        output += '<td>' + data[i].salary + '</td>';
+                        output += '<td>' + data[i].eName + '</td>';
+                        /*output += '<td><button type="button" class="btn btn-warning custom-button" onclick="editEmployee('
+                            + data[i].empno + ')">Update</button> '
+                            + '<button type="button" class="btn btn-danger custom-button" onclick="deleteEmployee('
+                            + data[i].empno + ')">Delete</button></td>';*/
+                        output += '</tr>';
+                    }
+                    $("#tableBody").html(output);
+                },
+                error: function (error) {
+                    alert("Error retrieving employees: " + error.responseText);
+                }
+            });
+        }
+
+        // Define editEmployee and deleteEmployee functions if needed
+        function editEmployee(empno) {
+            // Implement edit functionality here
+        }
+
+        function deleteEmployee(empno) {
+            // Implement delete functionality here
+        }
+    </script>
+</body>
+</html>
